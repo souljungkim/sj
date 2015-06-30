@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />		
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+		
+				
+		<!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script> -->
+		<!--[if lt IE 9]>
+			<script type="text/javascript" src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script type="text/javascript" src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+			<script type="text/javascript" src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>			
+		<![endif]-->		
+		<link rel="stylesheet" href="sj.css" />
+		<script type="text/javascript" src="sj.js"></script>		
+	</head>
+	
+	
+	
+	
+	
+	<body class="viewport sj-tleft">
+
+		
+		
+		<div class="sj-full sj-tleft" data-box="0">
+			<h1 id="p0" style="color:skyblue;">
+				sj.js Alpha Test
+				<input type="button" value="DOWNLOAD" onclick="alert('Github에 올릴 계획중에 있습니다.')" />
+			</h1>
+			<span class="sj-tleft">
+			&emsp;간단한 속성설정으로 감각적인 UI제공<br/>
+			&emsp;다음 환경에서 TEST를 성공 했습니다.<br/>
+			&emsp;&emsp;- Chrome for Windows<br/>
+			&emsp;&emsp;- IE7+ (ie8이하 canvas 지원안함)<br/>
+			&emsp;&emsp;- Opera for Windows<br/>			
+			&emsp;&emsp;- Firefox for Windows<br/>
+			&emsp;&emsp;- Safari for Windows <br/>
+			<br/>
+			&emsp;&emsp;- Chrome for Android<br/>
+			&emsp;&emsp;- Opera for Android<br/>
+			&emsp;&emsp;- Dolphin for Android<br/>
+			&emsp;&emsp;- Baidu for Android(fixed기능 떨림 현상)<br/>
+			&emsp;&emsp;- UC for Android<br/>
+			&emsp;&emsp;- NAVER for Android<br/>
+			&emsp;&emsp;- Firefox for Android<br/>
+			<br/><br/><br/>
+			</span>
+ 		</div>
+ 		
+ 		
+ 		<!-- data-fixed -->
+		<div class="sj-full" data-fixed data-box="0">	 		
+	 		
+	 		<!--  아카이브뷰 -->
+	 		<div data-type="archiveview" class="sj-grid sj-50 sj-tleft sj-tcenter">
+	 			<div id="strawberry">haha</div>
+	 			<div data-type="storage" data-box="7"
+		 		data-previewer="I'm container? Box?" 
+		 		data-event-click="alert('Why did you click me?');"
+		 		data-event-start="strawberry.childNodes[0].nodeValue = '딸기 먹고 싶은 사람:' +boxSize+ '/7명';"
+		 		data-event-boxinout="strawberry.childNodes[0].nodeValue = '딸기 먹고 싶은 사람:' +boxSize+ '/7명';">
+		 			<div data-movable data-img="img/pj001.gif" width="64" height="32"></div>
+		 			<div data-movable data-img="img/pj002.gif" width="64" height="32"></div>
+					<div data-movable data-img="img/pj003.gif" width="64" height="32"></div>
+					<div data-movable data-img="img/pj004.gif" width="64" height="32"></div>					 			
+				</div>
+			</div>		
+			
+			<!--  아카이브뷰 -->
+	 		<div data-type="archiveview" class="sj-grid sj-50 sj-left sj-tcenter">
+ 				<div id="blueberry">haha</div>
+				<div data-type="storage" data-box="20"
+				data-event-start="blueberry.childNodes[0].nodeValue = '포도 먹고 싶은 사람:' +boxSize+ '/20명';"
+				data-event-boxinout="blueberry.childNodes[0].nodeValue = '포도 먹고 싶은 사람:' +boxSize+ '/20명';">
+					<div data-movable data-img="img/pj006.gif" width="64" height="32"></div>
+					<div data-movable data-img="img/pj007.gif" width="64" height="32"></div>
+					<div data-movable data-img="img/pj008.gif"
+					data-previewer="be surprised" width="64" height="32"></div>
+					<div data-movable data-img="img/pj009.gif"
+					data-previewer="@o@" width="64" height="32"></div>
+					<div data-movable data-img="img/pj010.gif"
+					data-previewer="money" width="64" height="32"></div>		
+				</div>
+	 		</div>
+	 		
+	 	</div><!-- END data-fixed -->
+	 		 	
+	 		 	
+	 	<div class="sj-row"><!-- sj-row 첫번째 -->	
+	 	
+	 		<!-- 스크롤뷰 -->	
+	 		<div data-type="scrollview" class="sj-grid sj-100 sj-left sj-divider">
+	 			<div data-type="head">
+					<div data-type="title">scrollview</div>
+					<div data-type="menu">
+						<div data-type="option" data-event-click="">more</div>
+						<div data-type="option" data-event-click="">X</div>
+					</div>
+				</div>
+				<div data-type="storage" data-box>			
+					<div data-movable>스크롤뷰<br/>데이터 입니다</div>
+					<div data-movable>스크롤뷰<br/>데이터 입니다</div>
+					<div data-movable>스크롤뷰<br/>데이터 입니다</div>
+					<div data-movable>스크롤뷰<br/>데이터 입니다</div>
+					<div data-movable>스크롤뷰<br/>데이터 입니다</div>
+					<div data-movable>스크롤뷰<br/>데이터 입니다</div>
+					<div data-movable>스크롤뷰<br/>데이터 입니다</div>
+					<div data-movable>스크롤뷰<br/>데이터 입니다</div>
+					<div data-movable>스크롤뷰<br/>데이터 입니다</div>
+					<div data-movable>스크롤뷰<br/>데이터 입니다</div>
+				</div>
+			</div>
+	 	
+		</div><!-- END sj-row 첫번째 -->	 	
+	 		 	
+	 		 	
+	 	<div class="sj-row"><!-- sj-row 두번째 -->	
+	 	
+	 		<!-- 리스트뷰 -->
+	 		<div data-type="listview" class="sj-grid sj-30 sj-left sj-divider">
+	 			<div data-type="head">
+		 			<div data-type="title">list view</div>
+				</div>				
+				<div data-type="storage" data-box>
+					<div data-movable 
+					data-previewer="11111"
+					data-event-click="alert('thanks for click me 1');"> 			
+			 			movable OBJ 1
+					</div>
+					<div data-movable 
+					data-previewer="22222"
+					data-event-click="alert('thanks for click me 2');"> 			
+			 			movable OBJ 2
+					</div>
+					<div data-movable 
+					data-previewer="33333"
+					data-event-click="alert('thanks for click me 3');"> 			
+			 			movable OBJ 3
+					</div>
+				</div>
+			</div>		
+	 		
+	 		<!-- slide index가 o로 표시 -->
+	 		<div data-type="slideview" class="sj-grid sj-30 sj-left sj-divider">
+	 			<div data-type="head">
+					<div data-type="title">slideview</div>
+					<div data-type="menu">
+						<div data-type="option" data-event-click="">more</div>
+						<div data-type="option" data-event-click="">X</div>
+					</div>
+				</div>
+				<div data-type="index">
+				</div>
+				<div data-type="storage">			
+					<div data-box>
+						<div data-type="title">111</div>
+					</div>
+					<div data-box> 			
+			 			<div data-type="title">222</div>
+					</div>
+					<div data-box> 			
+			 			<div data-type="title">333</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- slide index가 data-type="title"안의 내용으로 표시 -->
+	 		<div data-type="slideview" class="sj-grid sj-30 sj-left sj-divider">
+	 			<div data-type="head">
+					<div data-type="title">slideview</div>
+					<div data-type="menu">
+						<div data-type="option" data-event-click="">more</div>
+						<div data-type="option" data-event-click="">X</div>
+					</div>
+				</div>
+				<div data-type="tap">
+				</div>
+				<div data-type="storage">			
+					<div data-box>
+						<div data-type="title">tap1</div>
+						1111111<br/><br/>	
+					</div>
+					<div data-box> 			
+			 			<div data-type="title">tap2</div>
+			 			2222222<br/><br/>
+					</div>
+					<div data-box> 			
+			 			<div data-type="title">tap3</div>
+			 			3333333<br/><br/>
+					</div>
+				</div>
+			</div>
+		</div><!-- END sj-row 두번째 -->	
+	
+	
+		
+		<div class="sj-row"><!-- sj-row 세번째 -->		
+		
+			<!--  슬라이드 뷰 오토  -->
+	 		<div data-type="slideview-auto" class="sj-grid sj-50 sj-left sj-divider">
+	 			<div data-type="head">
+					<div data-type="title">slideview-auto</div>
+					<div data-type="menu">
+						<div data-type="option" data-event-click="">more</div>
+						<div data-type="option" data-event-click="">X</div>
+					</div>
+				</div>
+				<div data-type="storage">			
+					<div data-box>
+						<div data-type="title">111</div>		 			
+					</div>
+					<div data-movable> 			
+			 			<div data-type="title">222</div>
+					</div>
+					<div data-movable> 			
+			 			<div data-type="title">333</div>
+					</div>
+				</div>
+			</div>
+	 		
+	 		<!-- 아카이브뷰 -->
+	 		<div data-type="archiveview" class="sj-grid sj-50 sj-left sj-divider">
+	 			<div data-type="head">
+					<div data-type="title">archive view</div>
+					<div data-type="menu">
+						<div data-type="option" data-event-click="">more</div>
+						<div data-type="option" data-event-click="">X</div>
+					</div>
+				</div>
+				<div data-type="storage" data-box>
+					<div data-movable 
+					data-previewer="77777"
+					data-event-click="alert('thanks for click me 7');"> 			
+			 			movable OBJ 7
+					</div>
+					<div data-movable 
+					data-previewer="88888"
+					data-event-click="alert('thanks for click me 8');"> 			
+			 			movable OBJ 8
+					</div>
+					<div data-movable 
+					data-previewer="99999"
+					data-event-click="alert('thanks for click me 9');"> 			
+			 			movable OBJ 9
+					</div>
+				</div>
+			</div>
+		 	
+		</div><!-- END sj-row 세번째 -->
+	
+	
+	
+	
+		<!-- paint의 도화지 크기는 storage의 크기에 맞춰집니다. -->
+		<div data-movable data-type="paint">
+			<div data-type="head">
+				<div data-type="title">paint</div>
+			</div>
+			<div data-type="storage" style="width:300px; height:100px;">
+				<canvas>
+					Sorry. Your browser do not support CANVAS.
+				</canvas>					
+			</div>			
+		</div>			
+		
+		
+		
+		
+		
+		<br/><br/><br/>
+		<h1 id="p1">1. 마우스 또는 손가락으로 끌어주세요</h1>
+		(모바일에서는 테두리가 파란색으로 변한 다음에 끌어주세요.)
+ 		<h1 id="p2">2. 끌어서 박스에 넣거나 밖으로 꺼내 주세요</h1>
+ 			
+ 		<div data-box
+	 	data-event-click="alert('저요!');"	 	
+		data-event-start="box.childNodes[0].nodeValue = '집에 가고 싶은 사람:' +boxSize+ '명';"
+		data-event-boxinout="box.childNodes[0].nodeValue = '집에 가고 싶은 사람:' +boxSize+ '명';">
+			Box4<br/>
+			<div data-movable data-img="img/pj005.gif" width="64" height="32"></div>			
+		</div><br/>
+ 		
+ 		<br/><br/><br/>
+ 		<div class="box">		
+	 		※ 구현 됨<br/>
+			data-box<br/>
+			data-box="객체 최대 수용 갯수"<br/>
+			data-movable<br/>
+			data-previewer<br/>
+			data-fixed<br/>
+			data-height-down<br/>
+			data-event-click<br/>			
+			data-event-start<br/>
+			data-event-boxin<br/>
+			data-event-boxout<br/>
+			data-event-boxinout<br/>
+			data-event-slide<br/>
+			data-type="listview"<br/>
+			data-type="scrollview"<br/>
+			data-type="slideview"<br/>			
+			data-type="slideview-auto"<br/>
+			data-type="archiveview"<br/>
+			data-type="paint"<br/>						
+		</div><br/>
+		
+		<div class="box">
+			※ 계획 중<br/>
+			data-event-boxlimit<br/>		
+			data-stranger<br/>			
+ 		</div><br/>
+ 		
+ 		※ 기획<br/> 		
+ 		- (뷰어) 리스트, 파노라마, 슬라이드, 아이콘뷰어, 그림판<br/>  					
+		- (기능) 그림 쪼개서 퍼즐게임, 지멋대로 돌아다니는 이상한놈<br/>
+		- (그리드) 모바일, 데스크탑<br/>
+		
+		<br/><br/><br/><br/><br/>
+
+		
+	</body>
+</html>

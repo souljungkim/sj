@@ -1,0 +1,93 @@
+		getElementById()
+		getElementByName()
+		getElementByTagName()
+
+onMouseDown =
+event.button==1   좌클릭
+event.button==2   우클릭
+
+onContextMenu = return false
+
+
+onDragStart = return false
+
+onSelectStart = return false
+
+
+onKeyDown = return false  
+event.keyCode
+event.cancelBubble
+event.returnValue
+event.ctrlKey
+event.shiftKey
+
+
+
+
+
+window
+closed
+opener
+status
+screenLeft
+screenTop
+alert
+blur
+focus
+moveTo(x,y)
+moveBy(dx,dy)
+resizeTo(w,h)
+resizeBy(dx,dy)
+open
+close
+print
+setTimeout
+clearTimeout
+
+
+document
+title
+lastModified
+bgColor
+fgColor
+linkColor
+alinkColor
+vlinkColor
+
+forms
+links
+images
+applets
+embeds
+write
+writeln
+
+screen
+width
+height
+availWidth
+availHeight
+
+navigator
+userAgent
+appCodeName
+appVersion
+appName
+cookieEnabled
+javaEnabled
+
+history
+length
+go()
+back
+forward
+
+event
+keyCode
+altKey
+ctrlKey
+shiftKey
+button
+clientX
+clientY
+srcElement

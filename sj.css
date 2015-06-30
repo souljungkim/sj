@@ -1,0 +1,247 @@
+﻿* {margin:0; padding:0;}
+
+
+
+.sj-obj-box {color:black; border:0px solid rgb(180,165,110); border-radius:10px; background:rgb(222,222,222);}
+[data-box='false'],
+[data-box='0'] {background:rgb(120,125,120);}
+
+.sj-wrap {display:inline-block; width:100%;}
+
+.sj-row {display:block; width:100%; text-align:center;}
+.sj-row:after {display:block; content:"";clear:both;}
+.sj-grid {display:inline-block; overflow:hidden;}
+
+.sj-grid [data-type=listview],
+.sj-grid [data-type^=slideview],
+.sj-grid [data-type=archiveview],
+.sj-grid [data-type=scrollview], 
+.sj-grid [data-type=paint] {width:; height:; text-align:center;}
+
+
+/* .sj-divider {border-top:2px solid #eeeeee;} */
+.sj-divider:after {content:""; display:block; height:30px;}
+/* .sj-divider100 {border-top:2px solid #eeeeee;} */
+.sj-divider100:after {content:""; display:block; height:100px;}
+/* .sj-divider150 {border-top:2px solid #eeeeee;} */
+.sj-divider150:after {content:""; display:block; height:150px;}
+
+
+.sj-left {float:left;}
+.sj-right {float:right;}
+
+.sj-tleft{text-align:left;}
+.sj-tright{text-align:right;}
+.sj-tcenter {text-align:center;}
+
+.sj-full {display:block; width:100%; overflow:hidden;}
+.sj-ani-1 {transition-duration:all 0.5s ease;;}
+
+
+
+
+
+.sj-atc			{display:block;  width:100%; border:0px solid; margin-bottom:10px; text-align:center; overflow:hidden;}
+.sj-atc-title	{display:block; font-size:20pt;}
+.sj-contents 	{display:inline-block;  text-align:center;  overflow:hidden; border-radius:5px;}
+.sj-content			{display:block; width:;  background:white; border:0px solid; overflow:hidden; margin-bottom:5px;  text-align:left; border-radius:5px;}
+.sj-content.jjop1	{margin-bottom:1px;}
+.sj-content-title	{display:block; width:;  background:skyblue; text-align:left; overflow:hidden;  border-radius:5px;}
+.sj-content-value	{display:block; width:;  background:; text-align:left;  overflow:hidden;}
+
+/* side 걸기 1 */
+.sj-atc.side .sj-content		{display:block; width:; height:; text-align:left;}
+.sj-atc.side .sj-content-title	{display:inline-block; height:100%; text-align:right; float:left; margin-right:10px; padding-right:5px;}
+.sj-atc.side .sj-content-value	{display:inline-block; height:100%; text-align:left; float:left;}
+
+/* side 걸기 2 : 특정 content만 side걸기 => sj-content와 같이 side를 써준다. */
+.sj-atc .sj-content.side					{display:block; text-align:left;}
+.sj-atc .sj-content.side .sj-content-title	{display:inline-block; height:100%; text-align:right; float:left; margin-right:10px;  padding-right:5px;}
+.sj-atc .sj-content.side .sj-content-value	{display:inline-block; height:100%; text-align:left; float:left;}
+
+/* side 풀기 : atc는 side이지만 특정 content를 noside걸기 => sj-content와 같이 noside를 써준다. */
+.sj-atc.side .sj-content.noside .sj-content-title {display:block; text-align:left; width:100%;}
+.sj-atc.side .sj-content.noside .sj-content-value {display:block; text-align:left; width:100%;}
+
+
+
+
+
+
+.sj-bg-x {background:none;}
+.sj-bg-0 {background:skyblue;}
+.sj-bg-1 {background:rgb(110, 210, 180);}
+.sj-bg-2 {background:rgb(230, 200, 100);}
+.sj-bg-3 {background:rgb(230, 230, 230);}
+.sj-bg-4 {background:rgb(250, 180, 100);}
+.sj-bg--1 {background:rgba(255, 255, 255,.1);}
+.sj-bg-245 {background:rgb(245, 245, 245);}
+.sj-bg-255 {background:rgb(255, 255, 255);}
+
+.sj-bd-x {border:none;}
+.sj-bd-0 {border:2px solid skyblue;}
+.sj-bd-1 {border:2px solid rgb(110, 210, 180);}
+.sj-bd-2 {border:2px solid rgb(230, 200, 100);}
+.sj-bd-3 {border:2px solid rgb(230, 230, 230);}
+.sj-bd-4 {border:2px solid rgb(250, 180, 100);}
+.sj-bd-255 {border:2px solid rgb(255, 255, 255);}
+
+.sj-font-0 {font-size:45px; font-weight:bold;}
+.sj-font-1 {font-size:40px; font-weight:bold;}
+.sj-font-2 {font-size:30px; font-weight:bold;}
+.sj-font-3 {font-size:20px; font-weight:bold;}
+
+.sj-padding {padding:10px;}
+.sj-hide {display:none;}
+
+.sj-input {width:90%; height:30px;}
+.sj-btn {width:90%; height:30px;}
+
+.sj-bdr-0 {border-radius:6px;}
+
+
+
+
+
+
+[data-type=listview] [data-type=storage] {width:100%;height:; overflow:hidden; }
+[data-type=listview] [data-type=storage] > * {display:block; width:100%;height:;}
+
+[data-type^=slideview] [data-type=storage] {display:inline-block; width:100%;height:; float:left; text-align:left;}
+[data-type^=slideview] [data-type=storage] > * {display:inline-block; width:100%;height:100%; background:; overflow:auto; float:left;}
+[data-type^=slideview] [data-type=storage] > * > [data-type=title] {font-size:25px; font-weight:bold;}
+
+[data-type=scrollview] [data-type=storage] > * {display:inline-block; width:auto; height:; text-align:left; margin:5px;}
+
+[data-type=archiveview] [data-type=storage] {width:100%;height:auto; overflow:hidden; }
+[data-type=archiveview] [data-type=storage] > * {display:block; width:auto; float:left; margin:2px;}
+
+/* CSS로 크기 조정하면 CANVAS 좌표가 이상해짐. 
+[data-type^=paint] canvas {width:150px;height:150px;} */ 
+[data-type=paint] [data-type=storage] {display:block; width:100%;height:; overflow:hidden; }
+[data-type=paint] canvas {display:block; background:#dddddd; float:;}
+
+
+
+
+[data-type=head] {width:100%; content:""; display:blcok; clear:both;}
+[data-type=head] > [data-type=title]{font-size:30pt;font-weight:bold;float:left;}
+[data-type=head] > [data-type=menu]{float:right;}
+[data-type=head] > [data-type=menu] > [data-type=option]{float:left; border:1px solid; background:#eeeeee; cursor:pointer;}
+
+[data-type=index] {content:""; display:blcok; clear:both; }
+[data-type=index] > [data-type=index-list] {background:inherit;}
+[data-type=index] > [data-type=index-list] > [data-type=option]{float:left; font-size:17pt; font-weight:bold; color:; cursor:pointer; background:inherit;}
+[data-type=index] > [data-type=index-list] > [data-type=option].now-slide {color:red;}
+
+[data-type=tap] {content:""; display:blcok; clear:both;}
+[data-type=tap] > [data-type=index-list] > [data-type=option]{float:left; font-size:18px; font-weight:bold; background:#eeeeee; color:; cursor:pointer; border:1px solid black;}
+[data-type=tap] > [data-type=index-list] > [data-type=option].now-slide {color:red; border-bottom-color:white; background:white;}
+
+[data-type=optionLeft],
+[data-type=optionRight]{float:left; border:1px solid; width:30px;font-size:18px; font-weight:bold; color:#333333; cursor:pointer; background:white;}
+
+
+
+
+
+
+
+
+
+
+
+.sj-obj-movable {display:inline-block; cursor:pointer; color:black; border:0px solid rgb(144,22,13); border-radius:20px; background:rgb(250,250,0); text-align:left;}	
+.sj-obj-movable.sj-obj-is-on-moving { z-index:500; box-shadow: 0px 20px 30px 10px #888888; background:;}
+
+.sj-obj-fixable{}
+.sj-obj-fixed{z-index:450;}
+
+.sj-obj-previewable: {}
+
+
+
+.sj-previewer {
+	background:rgb(255,255,255);
+	opacity:.9;
+	border-radius:20px;
+	position:absolute;
+	z-index:501;
+}
+.sj-preview-going-to-be-in-box {
+	opacity:.3;		
+}
+
+
+
+
+.w50 {width:50px;}
+.w60 {width:60px;}
+.w70 {width:70px;}
+.w100{width:100px;}
+
+
+.wide {width:95%;}
+.wide98 {width:98%;}
+.wide90 {width:90%;}
+.wide80 {width:80%;}
+
+
+.sj-h30{height:30px;}
+.sj-h50{height:50px;}
+.sj-h100{height:100px;}
+.sj-h150{height:150px;}
+.sj-h200{height:200px;}
+.sj-h300{height:300px;}
+.sj-h400{height:400px;}
+.sj-h500{height:500px;}
+
+
+
+@media (max-width: 767px) {  
+	.sj-100{width:100%;}
+	.sj-90{width:100%;}
+	.sj-80{width:100%;}
+	.sj-70{width:100%;}
+	.sj-60{width:100%;}
+	.sj-50{width:100%;}
+	.sj-40{width:100%;}
+	.sj-30{width:100%;}
+	.sj-20{width:100%;}
+	.sj-10{width:100%;}
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+	.viewport {width:760px;}
+	.sj-100{width:100%;}
+	.sj-90{width:100%;}
+	.sj-80{width:100%;}
+	.sj-70{width:100%;}
+	.sj-60{width:100%;}
+	.sj-50{width:100%;}
+	.sj-40{width:49.9%;}
+	.sj-30{width:33.25%;}
+	.sj-20{width:33.25%;}
+	.sj-10{width:33.25%;}
+}
+
+@media (min-width: 1024px){
+	.sj-100{width:100%;}
+	.sj-90{width:90%;}
+	.sj-80{width:80%;}
+	.sj-70{width:70%;}
+	.sj-60{width:60%;}
+	.sj-50{width:49.9%;}
+	.sj-40{width:45%;}
+	.sj-30{width:33.25%;}
+	.sj-20{width:20%;}
+	.sj-10{width:10%;}
+	
+	[data-type=head] > [data-type=menu] > [data-type=option]:hover {background:#bbbbbb;}
+	[data-type=index] > [data-type=index-list] > [data-type=option]:hover {color:rgb(200,0,50); opacity:.7;}
+	[data-type=tap] > [data-type=index-list] > [data-type=option]:hover {color:rgb(200,0,50); opacity:.7;}
+	[data-type=optionLeft]:hover,	
+	[data-type=optionRight]:hover {color:rgb(200,0,50); opacity:.7;}
+	.sj-obj-movable:hover { background:rgb(255,255,200); }
+}
+
+
