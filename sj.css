@@ -94,14 +94,18 @@
 .sj-padding {padding:10px;}
 .sj-hide {display:none;}
 
-.sj-input {width:90%; height:30px;}
-.sj-btn {width:90%; height:30px;}
+
+
+.sj-btn {cursor:pointer;}
+.sj-btn:hover {opacity:.9;}
 
 .sj-bdr-0 {border-radius:6px;}
 
+.sj-hidden-div{display:block; position:absolute; left:-5555px; top:-5555px; width:100%; height:100%;}
 
 
 
+[data-img] {display:inline-block;}
 
 
 [data-type=listview] [data-type=storage] {width:100%;height:; overflow:hidden; }

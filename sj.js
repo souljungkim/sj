@@ -305,18 +305,18 @@ function SJMouseGetPowerAfterLoad(){
 		if (setedObjs[j].isAdaptedImg) continue;
 		setedObjs[j].isAdaptedImg = true;
 		
-		var img = new Image();
-		img.src = setedObjs[j].getAttribute('data-img');
-		setedObjs[j].style.background = 'url(' +img.src+ ') no-repeat center';
+		setedObjs[j].img = new Image();
+		setedObjs[j].img.src = setedObjs[j].getAttribute('data-img');
+		setedObjs[j].style.background = 'url(' +setedObjs[j].img.src+ ') no-repeat center';
 		setedObjs[j].style.backgroundSize = '100% 100%';
-		img.objDiv = setedObjs[j];		
-		img.onload = function(){
+		setedObjs[j].img.objDiv = setedObjs[j];		
+		setedObjs[j].img.onload = function(){
 			/* 사이즈가 설정되어 있다면 그에 따른다 */
 			var w = this.objDiv.getAttribute('width');
 			var h = this.objDiv.getAttribute('height');
 			this.objDiv.style.width = (w) ? w+'px' : this.width+'px';
 			this.objDiv.style.height =(h) ? h+'px' : this.height+'px';
-		};		
+		};
 	}
 	
 	/** 객체마다 적용(상자 끌기) **/
@@ -403,11 +403,20 @@ function SJMouseGetPowerAfterLoad(){
 		sj.getBoxObjs().push(setedObjs[j]);
 
 		/** 객체마다 적용(이벤트) **/
+		
+		/**/
+		var eventFn = setedObjs[j].getAttribute('data-event-beforeboxin');
+		if (eventFn != null && eventFn != undefined){
+			/* 이벤트 함수 만들기 */			
+			setedObjs[j].executeEventBeforeboxin = new Function('box', 'obj', 'boxsize', eventFn);
+		}
+		/**/
 		var eventFn = setedObjs[j].getAttribute('data-event-boxinout');
 		if (eventFn != null && eventFn != undefined){
 			/* 이벤트 함수 만들기 */			
-			setedObjs[j].executeEventBoxinout = new Function('box','obj','boxSize', eventFn);
+			setedObjs[j].executeEventBoxinout = new Function('box','obj','boxSize', 'boxBefore', eventFn);
 		}
+		/**/
 		var eventFn = setedObjs[j].getAttribute('data-event-start');
 		if (eventFn != null && eventFn != undefined){
 			/* 이벤트 함수 만들기 */			
@@ -415,11 +424,13 @@ function SJMouseGetPowerAfterLoad(){
 			/* 이벤트 바로 실행 */
 			setedObjs[j].executeEventStart(setedObjs[j], undefined, sj.getMovableObjCount2(setedObjs[j]));
 		}
+		/**/
 		var eventFn = setedObjs[j].getAttribute('data-event-boxin');
 		if (eventFn != null && eventFn != undefined){
 			/* 이벤트 함수 만들기 */			
-			setedObjs[j].executeEventBoxin = new Function('box','obj','boxSize', eventFn);
+			setedObjs[j].executeEventBoxin = new Function('box','obj','boxSize', 'boxBefore', eventFn);
 		}
+		/**/
 		var eventFn = setedObjs[j].getAttribute('data-event-boxout');
 		if (eventFn != null && eventFn != undefined){
 			/* 이벤트 함수 만들기 */			
@@ -531,14 +542,23 @@ function SJMouseGetPower(){
 		if (navigator.userAgent.indexOf('Firefox') != -1) sjHelper.cross.preventDefault(event);
 
 		
-		/* ★ IE8에서 이벤트 넣어줄때 this라고 쓴 부분에서 윈도우 객체를 잡아다 보낸다. 그럼 NONO 할 수 없이 srcElement를 씀(이동가능 객체의 자손이 존재할 때 자손만 가지고 오지만 이거라도)*/
+		/* ★ IE8에서 이벤트 넣어줄때 this라고 쓴 부분에서 윈도우 객체를 잡아다 보낸다. 그럼 NONO 할 수 없이 srcElement를 쓰고 부모님에게 묻고 물어서 data-movable가능하신지 여쭈어서 찾는다.*/
 		if (selectedObj != window){
 			mvObj = selectedObj;
 		}else{
-			mvObj = sjHelper.cross.srcElement(event);
+			var searchMovableObj = sjHelper.cross.srcElement(event);			
+			while(searchMovableObj){
+				if (searchMovableObj.getAttribute('data-movable') != undefined) break; 
+				searchMovableObj = searchMovableObj.parentNode;
+			}
+			if (searchMovableObj){	
+				mvObj = searchMovableObj;
+			}else{	
+				mvObj = sjHelper.cross.srcElement(event); 
+			} 
 		}		
 		
-		/* 갈 곳 미리보기 클론 */
+ 		/* 갈 곳 미리보기 클론 */
 		mvObjPreviewClone = mvObj.cloneNode(true);		
 		mvObjPreviewClone.setAttribute('data-movable', 'false'); //undefined, null, true, false를 지정하면 조건식에서 정상적으로 작동을 안함. 스트링으로
 		sjHelper.cross.classList.add(mvObjPreviewClone, 'sj-preview-going-to-be-in-box');
@@ -555,7 +575,6 @@ function SJMouseGetPower(){
 				
 		/* 현재 마우스/터치 위치를 전역에 저장 */
 		setLastPos(event);
-		
 		/* Mobile Control */		
 		if (event.touches != undefined){
 			timerObj = event.touches[0].target;
@@ -597,19 +616,16 @@ function SJMouseGetPower(){
 		setLastPos(event);		
 		/* 모바일 터치 이벤트 시행 중... 영역에서 벗어나면 드래그 카운터 취소 */		
 		if (timerObj && !sjHelper.isInBox(timerObj, lastPosX, lastPosY)) removeTimer();
-		
 		if(isOnDown){			 
 			sjHelper.cross.preventDefault(event);
 			
 //			p0.innerHTML = mvObj.style.left + '/'+ mvObj.style.top +'/'+ mvObj.style.position + '/';
-			
 			/** 가는 위치 미리 보여주기 **/
 			var goingToBeInThisBox = getDecidedBox();			
 			if ( goingToBeInThisBox!=undefined ){
 				var canEnterWithoutNoLimit = ( goingToBeInThisBox.getAttribute("data-box") == '' );
 				var canEnter = ( goingToBeInThisBox.getAttribute("data-box") > getMovableObjCount(goingToBeInThisBox) );
 			}
-			
 			if ( goingToBeInThisBox==undefined ){
 				/* 박스 밖으로 갈 예정 */
 				if (mvObjPreviewClone.parentNode) mvObjPreviewClone.parentNode.removeChild(mvObjPreviewClone);
@@ -626,39 +642,36 @@ function SJMouseGetPower(){
 			/** mvObj 이동하여 표시하기 **/
 			/* X축 이동하기*/ 
 	        if(lastPosX - mvObj.adjustX >= 1
-	        && lastPosX - mvObj.adjustX + mvObj.offsetWidth <= document.body.offsetWidth) { 
+	        && lastPosX - mvObj.adjustX + mvObj.offsetWidth <= sjHelper.cross.getBodyOffsetX()) { 
 	        	mvObj.style.left = (lastPosX - mvObj.adjustX) + 'px';	        	
 	        }else{
 	        /* X축 이동 제한*/
 	        	if(lastPosX - mvObj.adjustX < 1) mvObj.style.left = 0 + 'px';
-	        	if(lastPosX - mvObj.adjustX + mvObj.offsetWidth > document.body.offsetWidth)
-	        		mvObj.style.left = (document.body.offsetWidth - mvObj.offsetWidth) + 'px';
+	        	if(lastPosX - mvObj.adjustX + mvObj.offsetWidth > sjHelper.cross.getBodyOffsetX())
+	        		mvObj.style.left = (sjHelper.cross.getBodyOffsetX() - mvObj.offsetWidth) + 'px';
 	        }
 	        /* Y축 이동하기 */ 
 	        if(lastPosY - mvObj.adjustY >= 1
-	        && lastPosY - mvObj.adjustY + mvObj.offsetHeight <= document.body.offsetHeight) { 
+	        && lastPosY - mvObj.adjustY + mvObj.offsetHeight <= sjHelper.cross.getBodyOffsetY()) { 
 	        	mvObj.style.top = (lastPosY - mvObj.adjustY)  + 'px';
 	        }else{
 	        /* Y축 이동 제한 */
 	        	if(lastPosY - mvObj.adjustY < 1) mvObj.style.top = 0 + 'px';
-	        	if(lastPosY - mvObj.adjustY + mvObj.offsetHeight > document.body.offsetHeight){
-	        		mvObj.style.top = (document.body.offsetHeight - mvObj.offsetHeight) + 'px';
+	        	if(lastPosY - mvObj.adjustY + mvObj.offsetHeight > sjHelper.cross.getBodyOffsetY()){
+	        		mvObj.style.top = (sjHelper.cross.getBodyOffsetY() - mvObj.offsetHeight) + 'px';
 	        	} 
 	        } 
-	        
 	        
 	        /** mvObj 이동중인 상태를 적용 **/
 	        mvObj.style.position = 'absolute';	        
 	        mvObj.style.float = '';
 	        sjHelper.cross.classList.add(mvObj, 'sj-obj-is-on-moving');
 	        document.body.appendChild(mvObj);
-	        
 	        /* 이동시 크기변이 또는 해당Layout의 scroll계산의 까다로움으로 인하여 mvObj의 영역에 마우스가 위치하지 않는 경우 마우스를 0점 위치로 */
 	        if (!isOnMoving) {
 	        	if (mvObj.adjustX > mvObj.offsetWidth || mvObj.adjustX < 0) mvObj.adjustX = mvObj.offsetWidth; 
 	        	if (mvObj.adjustY > mvObj.offsetHeight || mvObj.adjustY < 0) mvObj.adjustY = mvObj.offsetHeight;
 	        }
-	        
 	        /* 이동중 확정 */
 		    isOnMoving = true;		    
 		}	
@@ -701,7 +714,7 @@ function SJMouseGetPower(){
 			
 			/** 결정된 박스에 mvObj넣기  **/
 			if (decidedBox != undefined) {
-				/* 다시 같은 상자면 원위치, 이동을 허가하지 않은 상자면 원위치*/
+				/** 다시 같은 상자면 원위치, 이동을 허가하지 않은 상자면 원위치 **/
 				var canEnterWithoutNoLimit = (decidedBox.getAttribute("data-box") == '');
 				var canEnter = (decidedBox.getAttribute("data-box") > getMovableObjCount(decidedBox));
 				if ( decidedBox==mvObjBeforeBox || (!canEnterWithoutNoLimit && !canEnter) ){
@@ -710,20 +723,33 @@ function SJMouseGetPower(){
 						if (mvObjBeforePosition=='absolute'){
 							mvObj.style.left = mvObjStartBodyOffsetX;
 							mvObj.style.top = mvObjStartBodyOffsetY;
-							mvObj.style.float = '';
+							mvObj.style.float = ''; //??왜 플롯을??
 						}
+				
+				/** 다른 상자면 진행 **/
 				}else{
-				/* 다른 상자면 진행 */
-					/* 정렬 */
-					decidedBox.appendChild(mvObj);
-					mvObj.style.position = '';
-					/* 이벤트 실행(박스객체, 이동객체, 박스안 이동객체 수) */
-					if (mvObjBeforeBox.executeEventMustDo) mvObjBeforeBox.executeEventMustDo();
-					if (mvObjBeforeBox.executeEventBoxinout) mvObjBeforeBox.executeEventBoxinout(mvObjBeforeBox, mvObj, getMovableObjCount(mvObjBeforeBox));
-					if (mvObjBeforeBox.executeEventBoxout) mvObjBeforeBox.executeEventBoxout(mvObjBeforeBox, mvObj, getMovableObjCount(mvObjBeforeBox));
-					if (decidedBox.executeEventMustDo) decidedBox.executeEventMustDo();
-					if (decidedBox.executeEventBoxinout) decidedBox.executeEventBoxinout(decidedBox, mvObj, getMovableObjCount(decidedBox));
-					if (decidedBox.executeEventBoxin) decidedBox.executeEventBoxin(decidedBox, mvObj, getMovableObjCount(decidedBox));
+					/* 이동전 수행 펑션 true면 통과, false면 원위치*/
+					if (decidedBox.executeEventBeforeboxin && !decidedBox.executeEventBeforeboxin(decidedBox, mvObj, getMovableObjCount(mvObjBeforeBox))){
+						mvObjBeforeBox.insertBefore(mvObj, mvObjBeforeNextSibling);
+						mvObj.style.position = (mvObjBeforePosition=='absolute') ? 'absolute':''; 
+						if (mvObjBeforePosition=='absolute'){
+							mvObj.style.left = mvObjStartBodyOffsetX;
+							mvObj.style.top = mvObjStartBodyOffsetY;
+							mvObj.style.float = ''; //??왜 플롯을??
+						}
+					}else{
+					
+						/* 정렬 */
+						decidedBox.appendChild(mvObj);
+						mvObj.style.position = '';
+						/* 이벤트 실행(박스객체, 이동객체, 박스안 이동객체 수) */
+						if (mvObjBeforeBox.executeEventMustDo) mvObjBeforeBox.executeEventMustDo();
+						if (mvObjBeforeBox.executeEventBoxinout) mvObjBeforeBox.executeEventBoxinout(mvObjBeforeBox, mvObj, getMovableObjCount(mvObjBeforeBox));
+						if (mvObjBeforeBox.executeEventBoxout) mvObjBeforeBox.executeEventBoxout(mvObjBeforeBox, mvObj, getMovableObjCount(mvObjBeforeBox));
+						if (decidedBox.executeEventMustDo) decidedBox.executeEventMustDo();
+						if (decidedBox.executeEventBoxinout) decidedBox.executeEventBoxinout(decidedBox, mvObj, getMovableObjCount(decidedBox), mvObjBeforeBox);
+						if (decidedBox.executeEventBoxin) decidedBox.executeEventBoxin(decidedBox, mvObj, getMovableObjCount(decidedBox), mvObjBeforeBox);
+					}
 				}
 							
 				/* 초기화 */
@@ -1414,22 +1440,38 @@ function SJMouseGetPowerHelper(){
 	 *****/
 	var getBodyScrollX = function(){
 		var bodyPageX = 0;
-		if (document.documentElement 
-		&& document.documentElement.scrollLeft) bodyPageX = document.documentElement.scrollLeft;
+		if (document.documentElement && document.documentElement.scrollLeft) bodyPageX = document.documentElement.scrollLeft;
 		if (window.pageXOffset) bodyPageY = window.pageXOffset;
-		if (document.body 
-		&& document.body.scrollLeft) bodyPageX = document.body.scrollLeft;
+		if (document.body && document.body.scrollLeft) bodyPageX = document.body.scrollLeft;
 		return bodyPageX;
 	};
 	var getBodyScrollY= function(){
 		var bodyPageY = 0;
-		if (document.documentElement
-		&& document.documentElement.scrollTop) bodyPageY = document.documentElement.scrollTop;
+		if (document.documentElement && document.documentElement.scrollTop) bodyPageY = document.documentElement.scrollTop;
 		if (window.pageYOffset) bodyPageY = window.pageYOffset;
-		if (document.body 
-		&& document.body.scrollTop) bodyPageY = document.body.scrollTop;
+		if (document.body && document.body.scrollTop) bodyPageY = document.body.scrollTop;
 		return bodyPageY;
 	};
+	/*****
+	 * 문서의 크기
+	 * IE구버전 : document.documentElement.offsetWidth 
+	 * IE11 & others : document.body.offsetWidth 
+	 *****/
+	var getBodyOffsetX = function(){
+		var bodyOffsetX = 0;
+		if (document.documentElement && document.documentElement.offsetWidth) return document.documentElement.offsetWidth;
+		if (document.body && document.body.offsetWidth) return document.body.offsetWidth;
+		return bodyOffsetX;
+	};
+	var getBodyOffsetY= function(){
+		var bodyOffsetY = 0;
+		if (document.documentElement && document.documentElement.offsetHeight) return document.documentElement.offsetHeight;
+		if (document.body && document.body.offsetHeight) return document.body.offsetHeight;
+		return bodyOffsetY;
+	};
+	/*****
+	 * 긁기 방지
+	 *****/
 	var disableSelection = function (el){
 		if (typeof el.ondragstart != 'undefined') el.ondragstart = function(){return false;};
 		if (typeof el.onselectstart != 'undefined') el.onselectstart = function(){return false;};
@@ -1437,6 +1479,9 @@ function SJMouseGetPowerHelper(){
 		/* 파이어폭스에서 드래그 선택 금지 */
 		if (typeof el.style.MozUserSelect != 'undefined') document.body.style.MozUserSelect = 'none';
 	};
+	
+	
+	
 	this.cross = {
 			addEventListener: addEventListener		
 		,	preventDefault: preventDefault
@@ -1446,6 +1491,8 @@ function SJMouseGetPowerHelper(){
 		,	querySelectorAll: querySelectorAll
 		,	getBodyScrollX: getBodyScrollX
 		,	getBodyScrollY: getBodyScrollY
+		,	getBodyOffsetX: getBodyOffsetX
+		,	getBodyOffsetY: getBodyOffsetY
 		,	disableSelection: disableSelection
 	};
 	
@@ -1457,12 +1504,39 @@ function SJMouseGetPowerHelper(){
 	 *****/
 	/* 모바일여부 확인 */
 	this.isMobile = function(){
-		/** 모바일여부 확인 **/
 	    var mFilter = "win16|win32|win64|mac";
 	    var mCheck = false;
 	    if(navigator.platform) mCheck = ( mFilter.indexOf(navigator.platform.toLowerCase())<0 ) ? true : false;
 	    return mCheck; 
 	};
+	/* 웹브라우져 알아내기 */
+	this.getBrowserName = function(){
+		if (navigator){
+			var ua = navigator.userAgent.toLowerCase();
+			if(ua.indexOf('naver') != -1){
+				return 'naver';
+			}else if(ua.indexOf('kakaotalk') != -1){
+				return 'kakaotalk';			
+			}else if(ua.indexOf('opr') != -1 || ua.indexOf('opera') != -1){
+				return 'opera';
+			}else if(ua.indexOf('bdbrowser') != -1){
+				return 'baidu';
+			}else if(ua.indexOf('ucbrowser') != -1){
+				return 'uc';
+			}else if(ua.indexOf('chrome') != -1 && window.speechSynthesis){
+				return 'chrome';
+			}else if(ua.indexOf('safari') != -1 && ua.indexOf('android') == -1 ){
+				return 'safari';
+			}else if(ua.indexOf('firefox') != -1){
+				return 'firefox';
+			}else if(ua.indexOf('msie') != -1){
+				return 'ie';
+			}else if(ua.indexOf('trident') != -1){
+				return 'ie10+';
+			}		
+			return 'etc';
+		}
+	}
 	
 	
 	/* CREATE NEW DIV */
@@ -1488,13 +1562,12 @@ function SJMouseGetPowerHelper(){
 	this.isInBox = function (target, objX, objY){		
 		var targetBodyOffset = this.getBodyOffset(target);
 		var targetBodyOffsetX = targetBodyOffset.x;
-		var targetBodyOffsetY = targetBodyOffset.y;
-
+		var targetBodyOffsetY = targetBodyOffset.y;		
 		/* 문서 영역을 벗어났을 때 보정 */
 		objX = (objX <= 1) ? 1 : objX
-		objX = (objX > document.body.offsetWidth) ? document.body.offsetWidth : objX
+		objX = (objX > sjHelper.cross.getBodyOffsetX()) ? sjHelper.cross.getBodyOffsetX() : objX
 		objY = (objY <= 1) ? 1 : objY
-		objY = (objY > document.body.offsetHeight) ? document.body.offsetHeight : objY
+		objY = (objY > sjHelper.cross.getBodyOffsetY()) ? sjHelper.cross.getBodyOffsetY() : objY
 				
 		/* 상자 안인지 판정 */		
 		if(targetBodyOffsetX + target.scrollLeft< objX
@@ -1534,14 +1607,13 @@ function SJMouseGetPowerHelper(){
 					break;
 				}else{	
 					sumOffsetLeft += (thisObj.offsetLeft - parentObj.offsetLeft) - scrollX;
-					sumOffsetTop += (thisObj.offsetTop - parentObj.offsetTop) - scrollY;					
+					sumOffsetTop += (thisObj.offsetTop - parentObj.offsetTop) - scrollY;
 				}				
 				
 			}			
 			thisObj = parentObj;
 			parentObj = parentObj.parentNode;			
 		}
-		
 		var objBodyOffset = {x:sumOffsetLeft, y:sumOffsetTop};
 		return objBodyOffset;
 	};
