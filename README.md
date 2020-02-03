@@ -22,9 +22,9 @@
 
 점점 리팩토링에 리팩토링에 리팩토링을 거치고 나름 체계화시켜 이를 분리하여 `소극적인 모듈화를 진행`하고 
 
-`저장소를 분리`하고 `Build시스템`과 `CI시스템`을 더하고 `ES6+에서도 호환`되도록 한 후 `NPM에도 등록`하고 [https://sj-js.github.io/sj-js](https://sj-js.github.io/sj-js)에 `체험형문서시스템까지 구축`하였습니다.
+`저장소를 분리`([SJ-JS](https://github.com/sj-js))하고 `Build시스템`(Gulp)과 `CI시스템`(Travis-CI)을 더하고 `ES6+에서도 호환`되도록 한 후 `NPM에도 등록`([@sj-js](https://www.npmjs.com/search?q=%40sj-js))하고 `체험형문서시스템까지 구축`([Documentation](https://sj-js.github.io/sj-js))하였습니다.
 
-코드 구조는 그리 볼륨이 크지 않기에 `CrossMan`이라는 공통UTIL과 함께 1파일로 사용하는 구조로 개발을 이어가고 있습니다.
+코드 구조는 그리 볼륨이 크지 않기에 `CrossMan이라는 공통UTIL`과 함께 `1개 파일`로 사용하는 구조로 개발을 이어가고 있습니다.
 
 
 
